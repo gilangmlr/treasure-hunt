@@ -1,9 +1,16 @@
 #title{
 	font-family: 'Bree Serif', serif;
 	font-size: 64px;
-	text-align: center;
 }
 
 .buttons{
 	margin: auto;
+}
+
+.btn{
+	cursor: pointer;
+}
+
+#map{
+	height: 450px;
 }
