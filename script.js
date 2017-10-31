@@ -15,3 +15,18 @@ ts.endSimulationHandler = function(data) {
 $('#play-button').click(function() {
 	ts.findTreasure();
 });
+
+function grid(map){
+	this.map = map;
+	this.valid_coordinate = function(x,y){
+		if(x < 0 || y < 0  || x > map.length || y > map.length){
+			return false;
+		}
+		return true;
+	};
+	this.neighbor = function(x,y){
+		
+	};	
+}
+
+
