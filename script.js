@@ -16,6 +16,16 @@ $('#play-button').click(function() {
 	th.findTreasure();
 });
 
+function Node(x, y, obstacle, g, h, parent) {
+	this.x = x;
+	this.y = y;
+	this.obstacle = obstacle;
+	this.g = g || 0;
+	this.h = h || 0;
+	this.parent = parent || null;
+}
+
+
 function Grid(map){
 	this.map = map;
 	this.valid_coordinate = function(x,y){
@@ -49,20 +59,16 @@ function Grid(map){
 		}
 
 		return neighbors;
-	};	
-}
+	};
 
-function Node(x, y, obstacle, g, h, parent) {
-	this.x = x;
-	this.y = y;
-	this.obstacle = obstacle;
-	this.g = g || 0;
-	this.h = h || 0;
-	this.parent = parent || null;
-}
+	this.heuristicComparator = function(a, b) {
+		return (a.g + a.h) < (b.g + b.h);
+	}
 
-function heuristicComparator(a, b) {
-	return (a.g + a.h) < (b.g + b.h);
+	this.astar = function(){
+		var frontier = new FastPriorityQueue(this.heuristicComparator);
+
+	}
 }
 
 var map = [
@@ -72,6 +78,5 @@ var map = [
 ];
 var grid = new Grid(map);
 
-var frontier = new FastPriorityQueue(heuristicComparator);
 
 console.log(grid.neighbor(1, 1));
