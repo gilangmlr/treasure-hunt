@@ -16,8 +16,8 @@ $('#play-button').click(function() {
 	th.findTreasure();
 });
 
-var map = [];
-var grid = new Grid(map);
+var map;
+var grid;
 
 document.getElementById('file').onchange = function(){
   var file = this.files[0];
@@ -42,8 +42,11 @@ document.getElementById('file').onchange = function(){
     	map.push(row);
     }
 
-    grid = new Grid(map);
-    var path = grid.astar(map[0][3],map[1][3]);
+    grid = new Grid(map, map[0][3], map[1][3]);
+    grid.applyHeuristic(function(node, goal) {
+    	node.h = 4;
+    });
+    var path = grid.astar();
     console.log(path);
 
   };

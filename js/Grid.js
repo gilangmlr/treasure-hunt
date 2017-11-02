@@ -1,8 +1,17 @@
 /*
 * class Grid which has property map and method neighbor
 */
-function Grid(map){
+function Grid(map, start, goal){
+	this.start = start;
+	this.goal = goal;
 	this.map = map;
+	this.applyHeuristic = function(heuristicFn) {
+		for (var row = 0; row < this.map.length; row++) {
+			for (var col = 0; col < this.map[row].length; col++) {
+				heuristicFn(this.map[row][col], this.goal);
+			}
+		}
+	}
 	this.validCoordinate = function(x,y){
 		if(x < 0 || y < 0  || x >= this.map.length){
 			return false;
@@ -50,16 +59,16 @@ function Grid(map){
 	/*
 	* this method implements a* search to find the path from start to goal
 	*/
-	this.astar = function(start, goal){
+	this.astar = function(){
 		var frontier = new FastPriorityQueue(this.heuristicComparator);
-		frontier.add(start);
+		frontier.add(this.start);
 		while(!frontier.isEmpty()){
 			var currentNode = frontier.poll();
 			currentNode.visited = true;
 
-			if(currentNode.x == goal.x && currentNode.y == goal.y){
-				var parent = goal.parent;
-				var solution = [goal];
+			if(currentNode.x == this.goal.x && currentNode.y == this.goal.y){
+				var parent = this.goal.parent;
+				var solution = [this.goal];
 				var path = [];
     			while(parent != null){
 			    	var current = parent;
