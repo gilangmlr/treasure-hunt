@@ -22,8 +22,12 @@ $('#play-button').click(function() {
 function Grid(map){
 	this.map = map;
 	this.validCoordinate = function(x,y){
-		if(x < 0 || y < 0  || x >= this.map.length || y >= this.map[x].length){
+		if(x < 0 || y < 0  || x >= this.map.length){
 			return false;
+		} else {
+			if (y >= this.map[x].length){
+				return false;
+			}
 		}
 		return true;
 	};
@@ -66,17 +70,37 @@ function Grid(map){
 */
 	this.astar = function(start, goal){
 		var frontier = new FastPriorityQueue(this.heuristicComparator);
-		let exploredSet = new Set();
+		frontier.add(start);
 		while(!frontier.isEmpty()){
-
 			var currentNode = frontier.poll();
-			if(currentNode.x == goal.x && currentNode.y == goal.y){
+			currentNode.visited = true;
 
+			if(currentNode.x == goal.x && currentNode.y == goal.y){
+				var parent = goal.parent;
+				var solution = [goal];
+				var path = [];
+    			while(parent != null){
+			    	var current = parent;
+			    	solution.push(current);
+
+			    	parent = current.parent;
+			   	}
+			   	for (var i = solution.length - 1; i >= 0; i--) {
+			    		path.push(solution[i]);
+			    	}
+				return path;
 			}
 
-
+			var neighbors = this.neighbor(currentNode.x, currentNode.y);
+			for(var i = 0; i < neighbors.length; i++){
+				var neighborToCheck = neighbors[i];
+				if(neighborToCheck.visited == false && neighborToCheck.seen == false){
+					neighborToCheck.parent = currentNode;
+					frontier.add(neighborToCheck);
+					neighborToCheck.seen = true;
+				}
+			}
 		}
-
 	}
 }
 
@@ -104,10 +128,12 @@ document.getElementById('file').onchange = function(){
     	}
 
     	map.push(row);
-    	console.log(row);
     }
 
     grid = new Grid(map);
+    var path = grid.astar(map[0][3],map[5][4]);
+    console.log(path);
+
   };
 
   reader.readAsText(file);
