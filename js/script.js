@@ -16,16 +16,6 @@ $('#play-button').click(function() {
 	th.findTreasure();
 });
 
-function Node(x, y, obstacle, g, h, parent) {
-	this.x = x;
-	this.y = y;
-	this.obstacle = obstacle;
-	this.g = g || 0;
-	this.h = h || 0;
-	this.parent = parent || null;
-}
-
-
 function Grid(map){
 	this.map = map;
 	this.valid_coordinate = function(x,y){
@@ -71,12 +61,32 @@ function Grid(map){
 	}
 }
 
-var map = [
-  [new Node(0, 0, true), new Node(1, 0, false), new Node(2, 0, true)],
-  [new Node(0, 1, true), new Node(1, 1, false), new Node(2, 1, true)],
-  [new Node(0, 2, true), new Node(1, 2, false), new Node(2, 2, true)],
-];
-var grid = new Grid(map);
+document.getElementById('file').onchange = function(){
+  var file = this.files[0];
 
+  var reader = new FileReader();
+  reader.onload = function(progressEvent){
+    var lines = this.result.split('\n');
+    map = [];
+    for(var line = 0; line < lines.length; line++){
+    	var splittedLine = lines[line].trim().split('');
+    	var row = [];
+    	for(var col = 0; col < splittedLine.length; col++){
+    		var char = splittedLine[col];
+    		var obstacle = true;
+    		if (char > 0) {
+    			obstacle = false;
+    		}
 
-console.log(grid.neighbor(1, 1));
+    		row.push(new Node(line, col, obstacle));
+    	}
+
+    	map.push(row);
+    	console.log(row);
+    }
+
+    var grid = new Grid(map);
+  };
+  
+  reader.readAsText(file);
+};
