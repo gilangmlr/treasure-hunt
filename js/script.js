@@ -61,6 +61,9 @@ function Grid(map){
 	}
 }
 
+var map = [];
+var grid = new Grid(map);
+
 document.getElementById('file').onchange = function(){
   var file = this.files[0];
 
@@ -85,8 +88,8 @@ document.getElementById('file').onchange = function(){
     	console.log(row);
     }
 
-    var grid = new Grid(map);
+    grid = new Grid(map);
   };
-  
+
   reader.readAsText(file);
 };
