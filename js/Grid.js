@@ -5,10 +5,16 @@ function Grid(map, start, goal){
 	this.start = start;
 	this.goal = goal;
 	this.map = map;
+	this.SLDH = function(node, goal){
+		return Math.sqrt(Math.pow(node.x-goal.x)+Math.pow(node.y-goal.y));
+	}
+	this.manhattan = function(node,goal){
+		return 0;
+	}
 	this.applyHeuristic = function(heuristicFn) {
 		for (var row = 0; row < this.map.length; row++) {
 			for (var col = 0; col < this.map[row].length; col++) {
-				heuristicFn(this.map[row][col], this.goal);
+				this.map[row][col].h = heuristicFn(this.map[row][col], this.goal);
 			}
 		}
 	}
