@@ -42,7 +42,8 @@ document.getElementById('file').onchange = function(){
     	map.push(row);
     }
 
-    grid = new Grid(map, map[0][3], map[1][3]);
+    grid = new Grid(map, map[0][3], map[2][3]);
+    console.log(map);
     grid.applyHeuristic(grid.SLDH);
     var path = grid.astar();
     console.log(path);

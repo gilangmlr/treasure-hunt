@@ -11,6 +11,12 @@
 	cursor: pointer;
 }
 
-#map{
-	height: 450px;
+#map1{
+	background-color: red;
+	height: 150px;
+	width: 100px;
+	border-style: solid;
+    border-color: green;
+	float: left;
 }
+
