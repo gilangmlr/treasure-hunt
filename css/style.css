@@ -16,7 +16,32 @@
 	height: 150px;
 	width: 100px;
 	border-style: solid;
-    border-color: green;
+  border-color: green;
 	float: left;
 }
 
+#map {
+  text-align: center;
+  margin: 16px auto;
+}
+
+.map-row-col {
+  display: inline-block;
+}
+
+.map-row {
+  /*height: 64px;*/
+}
+
+.map-row-col-tile {
+  height: 64px;
+  width: 64px;
+  margin-right: 2px;
+  margin-left: 2px;
+  border: 1px solid black;
+  background-color: #512;
+}
+
+.map-row-col .obstacle {
+  background-color: #128;
+}

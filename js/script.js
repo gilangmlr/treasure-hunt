@@ -16,7 +16,6 @@ $('#play-button').click(function() {
 	th.findTreasure();
 });
 
-var map;
 var grid;
 
 document.getElementById('file').onchange = function(){
@@ -25,7 +24,7 @@ document.getElementById('file').onchange = function(){
   var reader = new FileReader();
   reader.onload = function(progressEvent){
     var lines = this.result.split('\n');
-    map = [];
+    var map = [];
     for(var line = 0; line < lines.length; line++){
     	var splittedLine = lines[line].trim().split('');
     	var row = [];
@@ -42,6 +41,8 @@ document.getElementById('file').onchange = function(){
     	map.push(row);
     }
 
+    renderMap(map);
+
     grid = new Grid(map, map[0][3], map[2][3]);
     console.log(map);
     grid.applyHeuristic(grid.SLDH);
@@ -52,3 +53,20 @@ document.getElementById('file').onchange = function(){
 
   reader.readAsText(file);
 };
+
+function renderMap(map) {
+  var mapElStr = '';
+  for (var i = 0; i < map.length; i++) {
+    mapElStr += '<div class="map-row">';
+    for (var j = 0; j < map[i].length; j++) {
+      var obstacle = map[i][j].obstacle? 'obstacle' : '';
+      mapElStr += '<div class="map-row-col">\
+          <div class="map-row-col-tile ' + obstacle + '"></div>\
+        </div>';
+      
+    }
+    mapElStr += '</div>';
+  }
+
+  $('#map').html(mapElStr);
+}
