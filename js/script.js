@@ -4,6 +4,7 @@ th.startSimulationHandler = function(data) {
 	$('#play-button').prop('disabled', true);
 	$('#pause-button').prop('disabled', false);
 	console.log('start simulation');
+  grid.astar();
 };
 
 th.endSimulationHandler = function(data) {
@@ -92,7 +93,7 @@ document.getElementById('file').onchange = function(){
     grid = new Grid(map, map[0][3], map[2][3]);
     // console.log(map);
     grid.applyHeuristic(grid.SLDH);
-    var path = grid.astar();
+    // var path = grid.astar();
     // console.log(path);
 
   };
