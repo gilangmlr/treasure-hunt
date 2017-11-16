@@ -68,9 +68,12 @@ function Grid(map, start, goal){
 	this.astar = function(){
 		var frontier = new FastPriorityQueue(this.heuristicComparator);
 		frontier.add(this.start);
+		this.start.seen = true;
+		renderTile(this.start.x, this.start.y, 'seen');
 		while(!frontier.isEmpty()){
 			var currentNode = frontier.poll();
 			currentNode.visited = true;
+			renderTile(currentNode.x, currentNode.y, 'visited');
 
 			if(currentNode.x == this.goal.x && currentNode.y == this.goal.y){
 				var parent = this.goal.parent;
@@ -95,6 +98,7 @@ function Grid(map, start, goal){
 					neighborToCheck.parent = currentNode;
 					frontier.add(neighborToCheck);
 					neighborToCheck.seen = true;
+					renderTile(neighborToCheck.x, neighborToCheck.y, 'seen');
 				}
 			}
 		}
