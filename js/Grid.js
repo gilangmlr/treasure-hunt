@@ -46,7 +46,7 @@ function Grid(map, start, goal){
 		return Math.sqrt(Math.pow(node.x-goal.x)+Math.pow(node.y-goal.y));
 	}
 	this.manhattan = function(node,goal){
-		return 0;
+		return Math.abs(node.x-goal.x) + Math.abs(node.y-goal.y);
 	}
 	this.applyHeuristic = function(heuristicFn) {
 		for (var row = 0; row < this.map.length; row++) {
