@@ -14,17 +14,8 @@ th.endSimulationHandler = function(data) {
 };
 
 $('#play-button').click(function() {
-	th.findTreasure();
+  var path = grid.astar();
 });
-
-function sleep(milliseconds) {
-  var start = new Date().getTime();
-  for (var i = 0; i < 1e7; i++) {
-    if ((new Date().getTime() - start) > milliseconds){
-      break;
-    }
-  }
-}
 
 function renderMap(map) {
   $('#map').html('');
@@ -41,26 +32,6 @@ function renderMap(map) {
     }
     $('#map').append(rowEl);
   }
-
-  // console.log('sleeping');
-  // sleep(2000);
-  console.log('map done');
-}
-
-function renderTile(x, y, status) {
-  console.log('x: ' + x + ', y: ' + y + ', status: ' + status);
-  // var el = $('.map-row:nth-child(' + (x + 1) + ') .map-row-col:nth-child(' + (y + 1) + ') .map-row-col-tile');
-  var el = $('#tile' + x + y);
-  if (status === 'seen') {
-    el.removeClass('visited');
-  } else {
-    el.removeClass('seen');
-  }
-  el.addClass(status);
-  el.hide().show(0);
-  // var foo = window.getComputedStyle(el[0], null);
-  // getComputedStyle(el[0]).transitionDuration; // force update
-  // console.log($('.map-row:nth-child(' + (x + 1) + ') .map-row-col:nth-child(' + (y + 1) + ')')[0]);
 }
 
 var grid;
@@ -88,14 +59,15 @@ document.getElementById('file').onchange = function(){
     	map.push(row);
     }
 
-    renderMap(map);
+    var start = map[0][2];
+    var goal = map[5][2];
 
-    grid = new Grid(map, map[0][3], map[2][3]);
-    // console.log(map);
+    grid = new Grid(map, start, goal);
     grid.applyHeuristic(grid.SLDH);
-    // var path = grid.astar();
-    // console.log(path);
 
+    renderMap(map);
+    $('#tile' + start.x + start.y).addClass('start').hide().show(0);
+    $('#tile' + goal.x + goal.y).addClass('goal').hide().show(0);
   };
 
   reader.readAsText(file);
