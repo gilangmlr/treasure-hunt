@@ -5,6 +5,7 @@
 
 .buttons{
 	margin: auto;
+	margin-bottom: 16px;
 }
 
 .btn{
@@ -47,15 +48,18 @@
 }
 
 .map-row-col .obstacle {
-  background-image: url("../src/img/anchor.png");
+  background-image: url("../src/img/banchor.png");
+  background-size: 32px 32px;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .map-row-col .seen {
-  background-image: url("../src/img/kapal.png");
+  background-image: url("../src/img/drops.png");
 }
 
 .map-row-col .visited {
-  background-image: url("../src/img/wave.png");
+	background-image: url("../src/img/wave.png");
 }
 
 .map-row-col .start {
@@ -64,4 +68,15 @@
 
 .map-row-col .goal {
   background-image: url("../src/img/tc.png");
+}
+
+.map-row-col .visited.goal {
+  background-image: url("../src/img/tc.gif");
+  background-size: 64px 64px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.map-row-col .path {
+  background-image: url("../src/img/kapal.png");
 }

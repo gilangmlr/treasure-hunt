@@ -64,8 +64,6 @@ document.getElementById('file').onchange = function(){
 
     grid = new Grid(map, start, goal);
 
-    grid.applyHeuristic(grid.SLDH);
-
     renderMap(map);
     $('#tile' + start.x + start.y).addClass('start').hide().show(0);
     $('#tile' + goal.x + goal.y).addClass('goal').hide().show(0);
@@ -73,3 +71,11 @@ document.getElementById('file').onchange = function(){
 
   reader.readAsText(file);
 };
+
+function clickHeuristic(mode) {
+	if (mode === 'mh') {
+		grid.applyHeuristic(grid.manhattan);
+	} else {
+		grid.applyHeuristic(grid.SLDH);
+	}
+}
