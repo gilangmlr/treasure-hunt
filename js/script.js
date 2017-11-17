@@ -90,7 +90,7 @@ document.getElementById('file').onchange = function(){
 
     renderMap(map);
 
-    grid = new Grid(map, map[0][3], map[2][3]);
+    grid = new Grid(map, map[0][3], map[5][4]);
     // console.log(map);
     grid.applyHeuristic(grid.SLDH);
     // var path = grid.astar();
