@@ -49,6 +49,7 @@ document.getElementById('file').onchange = function(){
     var goal = map[5][2];
 
     grid = new Grid(map, start, goal);
+
     grid.applyHeuristic(grid.SLDH);
 
     renderMap(map);

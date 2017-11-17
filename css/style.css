@@ -47,13 +47,21 @@
 }
 
 .map-row-col .obstacle {
-  background-image: url("../src/img/anchor.jpg");
+  background-image: url("../src/img/anchor.png");
 }
 
 .map-row-col .seen {
-  background-color: green;
+  background-image: url("../src/img/kapal.png");
 }
 
 .map-row-col .visited {
-  background-image: url("../src/img/waves.jpg");
+  background-image: url("../src/img/wave.png");
+}
+
+.map-row-col .start {
+  background-image: url("../src/img/start.png");
+}
+
+.map-row-col .goal {
+  background-image: url("../src/img/tc.png");
 }
