@@ -23,6 +23,7 @@ var animateGrid = function(idx, steps, path) {
 
 function renderPath(i, path) {
 	if (i >= path.length) {
+		$('#play-button').prop('disabled', false);
     return;
   }
   var el = $('#tile' + path[i].x + path[i].y);
