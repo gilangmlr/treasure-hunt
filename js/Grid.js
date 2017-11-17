@@ -1,3 +1,38 @@
+function renderTile(x, y, status) {
+  var el = $('#tile' + x + y);
+  if (status === 'seen') {
+    el.removeClass('visited');
+  } else {
+    el.removeClass('seen');
+  }
+  el.addClass(status);
+  el.hide().show(0);
+}
+
+var animateGrid = function(idx, steps, path) {
+  if (idx >= steps.length) {
+  	renderPath(0, path);
+    return;
+  }
+  var node = steps[idx];
+  renderTile(node.x, node.y, node.status);
+  setTimeout(function() {
+    animateGrid(idx + 1, steps, path);
+  }, 100);
+}
+
+function renderPath(i, path) {
+	if (i >= path.length) {
+    return;
+  }
+  var el = $('#tile' + path[i].x + path[i].y);
+  el.addClass('path');
+  el.hide().show(0);
+  setTimeout(function() {
+    renderPath(i + 1, path);
+  }, 100);
+}
+
 /*
 * class Grid which has property map and method neighbor
 */
@@ -5,6 +40,8 @@ function Grid(map, start, goal){
 	this.start = start;
 	this.goal = goal;
 	this.map = map;
+	this.steps = [];
+
 	this.SLDH = function(node, goal){
 		return Math.sqrt(Math.pow(node.x-goal.x)+Math.pow(node.y-goal.y));
 	}
@@ -69,25 +106,27 @@ function Grid(map, start, goal){
 		var frontier = new FastPriorityQueue(this.heuristicComparator);
 		frontier.add(this.start);
 		this.start.seen = true;
-		renderTile(this.start.x, this.start.y, 'seen');
+		this.start.status = 'seen';
+		this.steps.push({x: this.start.x, y: this.start.y, status: 'seen'});
 		while(!frontier.isEmpty()){
 			var currentNode = frontier.poll();
 			currentNode.visited = true;
-			renderTile(currentNode.x, currentNode.y, 'visited');
+			this.steps.push({x: currentNode.x, y: currentNode.y, status: 'visited'});
 
 			if(currentNode.x == this.goal.x && currentNode.y == this.goal.y){
 				var parent = this.goal.parent;
 				var solution = [this.goal];
 				var path = [];
-    			while(parent != null){
-			    	var current = parent;
-			    	solution.push(current);
+  			while(parent != null){
+		    	var current = parent;
+		    	solution.push(current);
 
-			    	parent = current.parent;
-			   	}
-			   	for (var i = solution.length - 1; i >= 0; i--) {
-			    		path.push(solution[i]);
-			    	}
+		    	parent = current.parent;
+		   	}
+		   	for (var i = solution.length - 1; i >= 0; i--) {
+	    		path.push(solution[i]);
+	    	}
+	    	animateGrid(0, this.steps, path);
 				return path;
 			}
 
@@ -98,7 +137,7 @@ function Grid(map, start, goal){
 					neighborToCheck.parent = currentNode;
 					frontier.add(neighborToCheck);
 					neighborToCheck.seen = true;
-					renderTile(neighborToCheck.x, neighborToCheck.y, 'seen');
+					this.steps.push({x: neighborToCheck.x, y: neighborToCheck.y, status: 'seen'});
 				}
 			}
 		}
