@@ -42,12 +42,12 @@
   width: 64px;
   margin-right: 2px;
   margin-left: 2px;
-  border: 1px solid black;
-  background-color: #512;
+/*  border: 1px solid black;
+*/  background-image: url("../src/img/ocean.gif");
 }
 
 .map-row-col .obstacle {
-  background-color: #128;
+  background-image: url("../src/img/anchor.jpg");
 }
 
 .map-row-col .seen {
@@ -55,5 +55,5 @@
 }
 
 .map-row-col .visited {
-  background-color: gray;
+  background-image: url("../src/img/waves.jpg");
 }
