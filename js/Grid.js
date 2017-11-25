@@ -25,7 +25,6 @@ var animateGrid = function(idx, steps, path) {
 
 function renderPath(i, path) {
 	if (i >= path.length) {
-    // $('#reset-button').prop('disabled', false);
     return;
   }
   var el = $('#tile' + path[i].x + path[i].y);
@@ -156,7 +155,5 @@ function Grid(map, start, goal){
     }
     this.steps = [];
     renderMap(this.map);
-    // $('#play-button').prop('disabled', false);
-    // $('.btn-heur').prop('disabled', false);
   }
 }

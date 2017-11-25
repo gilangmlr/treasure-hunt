@@ -1,11 +1,8 @@
 $('#play-button').click(function() {
-  // $('#play-button').prop('disabled', true);
-  // $('.btn-heur').prop('disabled', true);
   var path = grid.astar();
 });
 
 $('#reset-button').click(function() {
-  // $('#reset-button').prop('disabled', true);
   grid.reset();
 });
 
@@ -44,27 +41,28 @@ document.getElementById('file').onchange = function(){
     	var splittedLine = lines[line].trim().split('');
     	var row = [];
     	for(var col = 0; col < splittedLine.length; col++){
-    		var char = splittedLine[col];
+    		var char = parseInt(splittedLine[col]);
     		var obstacle = true;
     		if (char > 0) {
     			obstacle = false;
     		}
 
-    		row.push(new Node(line, col, obstacle));
+        var node = new Node(line, col, obstacle);
+    		row.push(node);
+
+        if (char === 2) {
+          start = node;
+        } else if (char === 3) {
+          goal = node;
+        }
     	}
 
     	map.push(row);
     }
 
-    start = map[0][2];
-    goal = map[5][2];
-
     grid = new Grid(map, start, goal);
 
     renderMap(map);
-
-    // $('#play-button').prop('disabled', false);
-    // $('.btn-heur').prop('disabled', false);
   };
 
   reader.readAsText(file);
