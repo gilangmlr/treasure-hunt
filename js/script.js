@@ -6,6 +6,16 @@ $('#pause-button').click(function() {
   grid.pause();
 });
 
+$('#next-button').click(function() {
+  grid.pause();
+  grid.next();
+});
+
+$('#prev-button').click(function() {
+  grid.pause();
+  grid.prev();
+});
+
 $('#reset-button').click(function() {
   grid.reset();
 });

@@ -158,4 +158,34 @@ function Grid(map, start, goal){
   this.pause = function() {
     this.isPlaying = false;
   }
+  this.next = function() {
+    if (this.step - 2 >= this.steps.length) {
+      return;
+    }
+
+    this.isPlaying = true;
+    var node = this.steps[this.step++];
+    renderTile(node.x, node.y, node.status);
+  }
+  this.prev = function() {
+    if (this.step - 2 <= 0) {
+      return;
+    }
+
+    this.isPlaying = true;
+    this.step--;
+    var node = this.steps[this.step];
+    var el = $('#tile' + node.x + node.y);
+    var status;
+    if (node.status === "path") {
+      el.removeClass("path");
+      status = "visited";
+    } else if (node.status === "visited") {
+      status = "seen";
+    } else if (node.status === "seen") {
+      el.removeClass("seen");
+      return;
+    }
+    renderTile(node.x, node.y, status);
+  }
 }
