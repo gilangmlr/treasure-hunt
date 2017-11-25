@@ -1,6 +1,12 @@
 $('#play-button').click(function() {
   $('#play-button').prop('disabled', true);
+  $('.btn-heur').prop('disabled', true);
   var path = grid.astar();
+});
+
+$('#reset-button').click(function() {
+  $('#reset-button').prop('disabled', true);
+  grid.reset();
 });
 
 function renderMap(map) {
@@ -18,9 +24,14 @@ function renderMap(map) {
     }
     $('#map').append(rowEl);
   }
+
+  $('#tile' + start.x + start.y).addClass('start').hide().show(0);
+  $('#tile' + goal.x + goal.y).addClass('goal').hide().show(0);
 }
 
-var grid;
+var grid = {};
+var start = {};
+var goal = {};
 
 document.getElementById('file').onchange = function(){
   var file = this.files[0];
@@ -45,14 +56,15 @@ document.getElementById('file').onchange = function(){
     	map.push(row);
     }
 
-    var start = map[0][2];
-    var goal = map[5][2];
+    start = map[0][2];
+    goal = map[5][2];
 
     grid = new Grid(map, start, goal);
 
     renderMap(map);
-    $('#tile' + start.x + start.y).addClass('start').hide().show(0);
-    $('#tile' + goal.x + goal.y).addClass('goal').hide().show(0);
+
+    $('#play-button').prop('disabled', false);
+    $('.btn-heur').prop('disabled', false);
   };
 
   reader.readAsText(file);
