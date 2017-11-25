@@ -10,8 +10,10 @@ function renderTile(x, y, status) {
 }
 
 var animateGrid = function(idx, steps, path) {
-  if (idx >= steps.length) {
-  	renderPath(0, path);
+  if (idx >= steps.length || grid.isResetting) {
+    if (!grid.isResetting) {
+      renderPath(0, path);
+    }
     return;
   }
   var node = steps[idx];
@@ -23,7 +25,7 @@ var animateGrid = function(idx, steps, path) {
 
 function renderPath(i, path) {
 	if (i >= path.length) {
-    $('#reset-button').prop('disabled', false);
+    // $('#reset-button').prop('disabled', false);
     return;
   }
   var el = $('#tile' + path[i].x + path[i].y);
@@ -104,6 +106,7 @@ function Grid(map, start, goal){
 	* this method implements a* search to find the path from start to goal
 	*/
 	this.astar = function(){
+    this.isResetting = false;
 		var frontier = new FastPriorityQueue(this.heuristicComparator);
 		frontier.add(this.start);
 		this.start.seen = true;
@@ -144,6 +147,7 @@ function Grid(map, start, goal){
 		}
 	}
   this.reset = function() {
+    this.isResetting = true;
     for (var row = 0; row < this.map.length; row++) {
       for (var col = 0; col < this.map[row].length; col++) {
         this.map[row][col].seen = false;
@@ -152,7 +156,7 @@ function Grid(map, start, goal){
     }
     this.steps = [];
     renderMap(this.map);
-    $('#play-button').prop('disabled', false);
-    $('.btn-heur').prop('disabled', false);
+    // $('#play-button').prop('disabled', false);
+    // $('.btn-heur').prop('disabled', false);
   }
 }

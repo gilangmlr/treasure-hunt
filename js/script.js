@@ -1,11 +1,11 @@
 $('#play-button').click(function() {
-  $('#play-button').prop('disabled', true);
-  $('.btn-heur').prop('disabled', true);
+  // $('#play-button').prop('disabled', true);
+  // $('.btn-heur').prop('disabled', true);
   var path = grid.astar();
 });
 
 $('#reset-button').click(function() {
-  $('#reset-button').prop('disabled', true);
+  // $('#reset-button').prop('disabled', true);
   grid.reset();
 });
 
@@ -63,8 +63,8 @@ document.getElementById('file').onchange = function(){
 
     renderMap(map);
 
-    $('#play-button').prop('disabled', false);
-    $('.btn-heur').prop('disabled', false);
+    // $('#play-button').prop('disabled', false);
+    // $('.btn-heur').prop('disabled', false);
   };
 
   reader.readAsText(file);
