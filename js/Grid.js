@@ -2,36 +2,22 @@ function renderTile(x, y, status) {
   var el = $('#tile' + x + y);
   if (status === 'seen') {
     el.removeClass('visited');
-  } else {
+  } else if (status === 'visited') {
     el.removeClass('seen');
   }
   el.addClass(status);
   el.hide().show(0);
 }
 
-var animateGrid = function(idx, steps, path) {
-  if (idx >= steps.length || grid.isResetting) {
-    if (!grid.isResetting) {
-      renderPath(0, path);
-    }
+var animateGrid = function(idx, steps) {
+  if (idx >= steps.length || !grid.isPlaying) {
     return;
   }
   var node = steps[idx];
   renderTile(node.x, node.y, node.status);
+  grid.step++;
   setTimeout(function() {
-    animateGrid(idx + 1, steps, path);
-  }, 100);
-}
-
-function renderPath(i, path) {
-	if (i >= path.length) {
-    return;
-  }
-  var el = $('#tile' + path[i].x + path[i].y);
-  el.addClass('path');
-  el.hide().show(0);
-  setTimeout(function() {
-    renderPath(i + 1, path);
+    animateGrid(idx + 1, steps);
   }, 100);
 }
 
@@ -42,7 +28,10 @@ function Grid(map, start, goal){
 	this.start = start;
 	this.goal = goal;
 	this.map = map;
+  this.path = [];
 	this.steps = [];
+  this.step = 0;
+  this.isPlaying = true;
 
 	this.SLDH = function(node, goal){
 		return Math.sqrt(Math.pow(node.x-goal.x, 2)+Math.pow(node.y-goal.y, 2));
@@ -105,7 +94,12 @@ function Grid(map, start, goal){
 	* this method implements a* search to find the path from start to goal
 	*/
 	this.astar = function(){
-    this.isResetting = false;
+    this.isPlaying = true;
+    if (this.steps.length > 0) {
+      animateGrid(this.step, this.steps);
+      return
+    }
+
 		var frontier = new FastPriorityQueue(this.heuristicComparator);
 		frontier.add(this.start);
 		this.start.seen = true;
@@ -119,18 +113,22 @@ function Grid(map, start, goal){
 			if(currentNode.x == this.goal.x && currentNode.y == this.goal.y){
 				var parent = this.goal.parent;
 				var solution = [this.goal];
+        this.goal.status = "path";
 				var path = [];
   			while(parent != null){
 		    	var current = parent;
 		    	solution.push(current);
+          current.status = "path";
 
 		    	parent = current.parent;
 		   	}
 		   	for (var i = solution.length - 1; i >= 0; i--) {
 	    		path.push(solution[i]);
 	    	}
-	    	animateGrid(0, this.steps, path);
-				return path;
+
+        this.path = path;
+        this.steps = this.steps.concat(path);
+	    	animateGrid(this.step, this.steps);
 			}
 
 			var neighbors = this.neighbor(currentNode.x, currentNode.y);
@@ -146,14 +144,18 @@ function Grid(map, start, goal){
 		}
 	}
   this.reset = function() {
-    this.isResetting = true;
+    this.isPlaying = false;
     for (var row = 0; row < this.map.length; row++) {
       for (var col = 0; col < this.map[row].length; col++) {
         this.map[row][col].seen = false;
         this.map[row][col].visited = false;
       }
     }
+    this.step = 0;
     this.steps = [];
     renderMap(this.map);
+  }
+  this.pause = function() {
+    this.isPlaying = false;
   }
 }

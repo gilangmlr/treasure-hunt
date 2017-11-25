@@ -1,5 +1,9 @@
 $('#play-button').click(function() {
-  var path = grid.astar();
+  grid.astar();
+});
+
+$('#pause-button').click(function() {
+  grid.pause();
 });
 
 $('#reset-button').click(function() {
