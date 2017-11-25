@@ -12,15 +12,6 @@
 	cursor: pointer;
 }
 
-#map1{
-	background-color: red;
-	height: 150px;
-	width: 100px;
-	border-style: solid;
-  border-color: green;
-	float: left;
-}
-
 #map {
   text-align: center;
   margin: 16px auto;
@@ -41,8 +32,11 @@
 .map-row-col-tile {
   height: 64px;
   width: 64px;
-  margin-right: 2px;
-  margin-left: 2px;
+  margin-right: -3px;
+  margin-left: -3px;
+  margin-bottom: -4px;
+  margin-top: -4px;
+  border: none;
 /*  border: 1px solid black;
 */  background-image: url("../src/img/ocean.gif");
 }
@@ -59,11 +53,14 @@
 }
 
 .map-row-col .visited {
-	background-image: url("../src/img/wave.png");
+	background-image: url("../src/img/ombak.png");
 }
 
 .map-row-col .start {
   background-image: url("../src/img/start.png");
+  background-size: 54px 54px;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .map-row-col .goal {
@@ -72,7 +69,7 @@
 
 .map-row-col .visited.goal {
   background-image: url("../src/img/tc.gif");
-  background-size: 64px 64px;
+  background-size: 80px 80px;
   background-repeat: no-repeat;
   background-position: center;
 }
