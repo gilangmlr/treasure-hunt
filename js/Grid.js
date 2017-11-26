@@ -155,9 +155,13 @@ function Grid(map, start, goal){
     this.steps = [];
     renderMap(this.map);
   }
-  this.pause = function() {
-    this.isPlaying = false;
-  }
+  	if(!this.isPlaying){
+  		$("#pause-button").property('disabled');
+  	}
+	this.pause = function() {
+		this.isPlaying = false;
+	}
+   
   this.next = function() {
     if (this.step - 2 >= this.steps.length) {
       return;

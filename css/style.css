@@ -3,7 +3,7 @@
 	font-size: 64px;
 }
 
-.buttons{
+#buttons{
 	margin: auto;
 	margin-bottom: 16px;
 }
@@ -50,6 +50,9 @@
 
 .map-row-col .seen {
   background-image: url("../src/img/drops.png");
+  background-size: 32px 32px;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .map-row-col .visited {
@@ -58,7 +61,7 @@
 
 .map-row-col .start {
   background-image: url("../src/img/start.png");
-  background-size: 54px 54px;
+  background-size: 52px 52px;
   background-repeat: no-repeat;
   background-position: center;
 }
