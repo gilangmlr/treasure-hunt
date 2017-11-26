@@ -20,6 +20,10 @@ var animateGrid = function(idx, steps) {
   setTimeout(function() {
     animateGrid(grid.step, steps);
   }, 100);
+	$("#pause-button").prop('disabled', false);
+	$("#prev-button").prop('disabled', false);
+	$("#next-button").prop('disabled', false);
+	$("#reset-button").prop('disabled', false);
 }
 
 /*
