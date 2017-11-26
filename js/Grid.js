@@ -13,11 +13,12 @@ var animateGrid = function(idx, steps) {
   if (idx >= steps.length || !grid.isPlaying) {
     return;
   }
+  grid.step = idx;
   var node = steps[idx];
   renderTile(node.x, node.y, node.status);
   grid.step++;
   setTimeout(function() {
-    animateGrid(idx + 1, steps);
+    animateGrid(grid.step, steps);
   }, 100);
 }
 
@@ -113,22 +114,21 @@ function Grid(map, start, goal){
 			if(currentNode.x == this.goal.x && currentNode.y == this.goal.y){
 				var parent = this.goal.parent;
 				var solution = [this.goal];
-        this.goal.status = "path";
 				var path = [];
   			while(parent != null){
 		    	var current = parent;
 		    	solution.push(current);
-          current.status = "path";
 
 		    	parent = current.parent;
 		   	}
 		   	for (var i = solution.length - 1; i >= 0; i--) {
-	    		path.push(solution[i]);
+	    		path.push({x: solution[i].x, y: solution[i].y, status: 'path'});
 	    	}
 
         this.path = path;
         this.steps = this.steps.concat(path);
 	    	animateGrid(this.step, this.steps);
+        return this.path;
 			}
 
 			var neighbors = this.neighbor(currentNode.x, currentNode.y);
