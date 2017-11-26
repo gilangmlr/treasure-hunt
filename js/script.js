@@ -85,7 +85,10 @@ document.getElementById('file').onchange = function(){
 function clickHeuristic(mode) {
 	if (mode === 'mh') {
 		grid.applyHeuristic(grid.manhattan);
-	} else {
+	} else if(mode === 'sld'){
 		grid.applyHeuristic(grid.SLDH);
 	}
+  else{
+    grid.applyHeuristic(grid.uninformed);
+  }
 }

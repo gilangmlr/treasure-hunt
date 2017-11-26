@@ -40,6 +40,9 @@ function Grid(map, start, goal){
 	this.manhattan = function(node,goal){
 		return Math.abs(node.x-goal.x) + Math.abs(node.y-goal.y);
 	}
+	this.uninformed = function(node,goal){
+		return 0;
+	}
 	this.applyHeuristic = function(heuristicFn) {
 		for (var row = 0; row < this.map.length; row++) {
 			for (var col = 0; col < this.map[row].length; col++) {
@@ -155,9 +158,6 @@ function Grid(map, start, goal){
     this.steps = [];
     renderMap(this.map);
   }
-  	if(!this.isPlaying){
-  		$("#pause-button").property('disabled');
-  	}
 	this.pause = function() {
 		this.isPlaying = false;
 	}
