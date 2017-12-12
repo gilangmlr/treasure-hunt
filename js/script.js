@@ -1,5 +1,6 @@
 $('#play-button').click(function() {
   grid.astar();
+  grid.play();
 });
 
 $('#pause-button').click(function() {
@@ -85,10 +86,65 @@ document.getElementById('file').onchange = function(){
 function clickHeuristic(mode) {
 	if (mode === 'mh') {
 		grid.applyHeuristic(grid.manhattan);
-	} else if(mode === 'sld'){
+	} else if (mode === 'sld'){
 		grid.applyHeuristic(grid.SLDH);
-	}
-  else{
+	} else if (mode === 'u'){
+    grid.gbfs();
     grid.applyHeuristic(grid.uninformed);
+  } else if(mode === 'gbfs') {
+    grid.gbfs();
+    clickHeuristic($('#heuristic').val());
+  } else if (mode === 'a*') {
+    if ($('#heuristic').val() != 'u') {
+      grid.astarBFS();
+    }
+  }
+}
+
+function randomMap() {
+  var rows = 16;
+  var started = 0;
+  var goaled = 0;
+  var map = [];
+  for(var line = 0; line < rows; line++){
+    var cols = 16;
+    var row = [];
+    var strRow = "";
+    for(var col = 0; col < cols; col++){
+      var char = Math.floor(Math.random() * 4);
+      if (char === 2 && started !== 0) {
+        char = Math.floor(Math.random() * 2);
+      } else if (char === 3 && goaled !== 0) {
+        char = Math.floor(Math.random() * 2);
+      }
+      var obstacle = true;
+      if (char > 0) {
+        obstacle = false;
+      }
+
+      var node = new Node(line, col, obstacle);
+      strRow += char;
+      row.push(node);
+
+      if (char === 2) {
+        started = 2;
+        start = node;
+      } else if (char === 3) {
+        goaled = 3;
+        goal = node;
+      }
+    }
+
+    map.push(row);
+    console.log(strRow);
+    console.log();
+  }
+
+  grid = new Grid(map, start, goal);
+
+  if (grid.astar() === undefined) {
+    randomMap();
+  } else {
+    renderMap(map);
   }
 }

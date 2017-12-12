@@ -16,6 +16,7 @@
 			<div class="col text-center">
 				<div id="title">Treasure Hunt</div>
 				<label>Select Map: &nbsp;&nbsp;</label><input type="file" name="file" id="file">
+				<button id="rand-button" onclick="randomMap()" class="btn btn-primary" title="random map"><span class="fa fa-map"></span></button>
 			</div>
 		</div>
 		<div id="map">
@@ -141,7 +142,7 @@
 			</div>
 		</div>
 		<div class="row">
-				<div id="buttons">
+				<div class="buttons">
 					<button id="prev-button" class="btn btn-primary" title="previous step" disabled><span class="fa fa-chevron-left"></span></button>
 					<button id="play-button" class="btn btn-primary" title="start the journey!"><span class="fa fa-play"></span></button>
 					<button id="pause-button" class="btn btn-primary" title="pause" disabled><span class="fa fa-pause"></span></button>
@@ -150,17 +151,24 @@
 				</div>
 		</div>
 		<div class="row">
-			<div id="buttons">
+			<div class="buttons">
 				<label>Select Heuristic:&nbsp;&nbsp;</label>
-				<select onchange="clickHeuristic(this.value)" class="selectpicker show-tick" data-style="btn-primary">
-					<option value="u">Uninformed</option>
+				<select id="heuristic" onchange="clickHeuristic(this.value)">
+					<option value="u">Uninformed (Breadth First Search)</option>
 					<option value="mh">Manhattan Distance</option>
 					<option value="sld">Straight Line Distance</option> 
 				</select>
-
 			</div>
 		</div>
-		
+		<div class="row">
+			<div class="buttons">
+				<label>Select Algorithm:&nbsp;&nbsp;</label>
+				<select onchange="clickHeuristic(this.value)">
+					<option value="gbfs">Greedy Best-First Search</option>
+					<option value="a*">A* Search</option>
+				</select>
+			</div>
+		</div>
 	</div>
 	<script src="js/jquery-3.2.1.min.js"></script>
 	<script src="js/Node.js"></script>

@@ -47,6 +47,34 @@ function Grid(map, start, goal){
 	this.uninformed = function(node,goal){
 		return 0;
 	}
+  this.gbfs = function() {
+    for (var row = 0; row < this.map.length; row++) {
+      for (var col = 0; col < this.map[row].length; col++) {
+        this.map[row][col].g = 0;
+      }
+    }
+  }
+  this.astarBFS = function() {
+    var g = 0;
+    var queue = [];
+    this.start.g = g;
+    queue.push(this.start);
+    this.start.bfsed = true;
+
+    while (queue.length > 0) {
+      var node = queue.shift();
+      var neighbors = this.neighbor(node.x, node.y);
+      for (var i = 0; i < neighbors.length; i++) {
+        var neighbor = neighbors[i];
+        if (neighbor.bfsed) {
+          continue;
+        }
+        neighbor.g = node.g + 1;
+        queue.push(neighbor);
+        neighbor.bfsed = true;
+      }
+    }
+  }
 	this.applyHeuristic = function(heuristicFn) {
 		for (var row = 0; row < this.map.length; row++) {
 			for (var col = 0; col < this.map[row].length; col++) {
@@ -134,7 +162,6 @@ function Grid(map, start, goal){
 
         this.path = path;
         this.steps = this.steps.concat(path);
-	    	animateGrid(this.step, this.steps);
         return this.path;
 			}
 
@@ -150,6 +177,9 @@ function Grid(map, start, goal){
 			}
 		}
 	}
+  this.play = function() {
+    animateGrid(this.step, this.steps);
+  }
   this.reset = function() {
     this.isPlaying = false;
     for (var row = 0; row < this.map.length; row++) {
