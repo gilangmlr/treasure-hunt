@@ -103,7 +103,7 @@ function clickHeuristic(mode) {
 }
 
 function randomMap() {
-  var rows = 8;
+  var rows = 6;
   var started = 0;
   var goaled = 0;
   var map = [];
