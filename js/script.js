@@ -19,6 +19,7 @@ $('#prev-button').click(function() {
 
 $('#reset-button').click(function() {
   grid.reset();
+  clickHeuristic($("#algo").val());
 });
 
 function renderMap(map) {
