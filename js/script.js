@@ -102,19 +102,21 @@ function clickHeuristic(mode) {
 }
 
 function randomMap() {
-  var rows = 16;
+  var rows = 8;
   var started = 0;
   var goaled = 0;
   var map = [];
   for(var line = 0; line < rows; line++){
-    var cols = 16;
+    var cols = 8;
     var row = [];
     var strRow = "";
     for(var col = 0; col < cols; col++){
-      var char = Math.floor(Math.random() * 4);
-      if (char === 2 && started !== 0) {
+      var rand = Math.random();
+      var char = Math.floor(rand * 4);
+      var startGoal = rand <= 0.9;
+      if (char === 2 && started !== 0 && startGoal) {
         char = Math.floor(Math.random() * 2);
-      } else if (char === 3 && goaled !== 0) {
+      } else if (char === 3 && goaled !== 0 && startGoal) {
         char = Math.floor(Math.random() * 2);
       }
       var obstacle = true;
